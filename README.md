@@ -36,7 +36,7 @@ frontend/
 - **Google** based login mechanism
 - User-based authorization for todos using **JWT** and **Passport.js**.
 - highlights the row in red if the task is **overdue(deadline has passed and is incomplete)**.
-- Assign the todos to **groups**
+- Assign the todos to **groups** (partially complete - apis for group CRUD is complete)
 - **Sequelize ORM** for database interaction, making the app scalable and easily modifiable.
 - **Helmet** for securing the app by setting various HTTP headers.
 - Fully **TypeScript**-based for strong typing and enhanced developer experience.
@@ -112,6 +112,14 @@ The following API endpoints are available:
 - **POST /todos** - Create a new todo.
 - **PUT /todos/:id** - Update a specific todo.
 - **DELETE /todos/:id** - Delete a specific todo.
+
+### Groups
+
+- **GET /groups** - Fetch all todos for the authenticated user.
+- **POST /groups** - Create a new todo.
+- **PUT /groups/:id** - Update a specific todo.
+- **DELETE /groups/:id** - Delete a specific todo.
+
 
 ### Authentication
 
