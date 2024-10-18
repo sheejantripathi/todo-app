@@ -9,6 +9,15 @@ module.exports = {
         primaryKey: true,
         allowNull: false,
       },
+      user_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: "users",
+          key: "id",
+        },
+        onDelete: "CASCADE",
+      },
       task: {
         type: Sequelize.STRING,
         allowNull: false,
