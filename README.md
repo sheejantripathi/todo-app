@@ -1,8 +1,5 @@
-Here’s a comprehensive README file based on your project's design choices, approach, and use of libraries and dependencies:
 
----
-
-# Todo Application - Backend API
+# Todo Application
 
 This project is a **FullStack Todo Application** built with **Node.js** and **TypeScript**, utilizing **Express.js** for the web server for the backend, **Sequelize** as the ORM for interacting with a **MySQL** database, and **Jest** for testing. The application is secured with **Helmet** and authenticated via **Passport.js**. On the frontend, **Reactjs** is used with the **Javascript** to introduce some variety of usge Js on the frontend and TS on the backend. This README will walk you through the approach taken, design choices made, the libraries and dependencies used, and testing strategies.
 
