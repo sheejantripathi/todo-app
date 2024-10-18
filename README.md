@@ -4,7 +4,7 @@ Here’s a comprehensive README file based on your project's design choices, app
 
 # Todo Application - Backend API
 
-This project is a **Todo Application API** built with **Node.js** and **TypeScript**, utilizing **Express.js** for the web server, **Sequelize** as the ORM for interacting with a **MySQL** database, and **Jest** for testing. The application is secured with **Helmet** and authenticated via **Passport.js**. This README will walk you through the approach taken, design choices made, the libraries and dependencies used, and testing strategies.
+This project is a **FullStack Todo Application** built with **Node.js** and **TypeScript**, utilizing **Express.js** for the web server for the backend, **Sequelize** as the ORM for interacting with a **MySQL** database, and **Jest** for testing. The application is secured with **Helmet** and authenticated via **Passport.js**. On the frontend, **Reactjs** is used with the **Javascript** to introduce some variety of usge Js on the frontend and TS on the backend. This README will walk you through the approach taken, design choices made, the libraries and dependencies used, and testing strategies.
 
 ## Project Structure
 
@@ -19,6 +19,16 @@ backend/
 │   ├── app.ts          # Main Express app entry point
 │   └── server.ts       # Server bootstrap (exports app for testing)
 ├── jest.config.ts      # Jest configuration
+├── package.json        # Dependencies and scripts
+frontend/
+├── public/             # static files and images
+├── src/
+│   ├── assets/         # Configuration files (e.g., database config)
+│   ├── components/     # todo UI components
+│   ├── hooks/          # hook fro google oauth
+│   ├── app.jsx         # Holds core logic of the frontend
+│   └── main.jsx        # Entry point of the react application
+├── index.html          # Jest configuration
 ├── package.json        # Dependencies and scripts
 └── README.md           # This file
 ```
@@ -45,8 +55,8 @@ backend/
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/todo-backend.git
-cd todo-backend
+git clone https://github.com/sheejantripathi/todo-app.git
+cd backend
 ```
 
 ### 2. Install dependencies
