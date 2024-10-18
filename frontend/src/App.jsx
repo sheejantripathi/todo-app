@@ -5,8 +5,7 @@ import useGoogleAuth from "./hooks/useGoogleAuth";
 import LoginPage from "./components/LoginPage";
 import CustomNavbar from "./components/Navbar";
 import MyTodos from "./components/MyTodos";
-import TodoItem from "./components/TodoItem";
-import axios from "axios"; // Assuming you use axios for API calls
+import axios from "./axiosConfig"; // Assuming you use axios for API calls
 
 const App = () => {
   const { profile, login, logOut, error } = useGoogleAuth();
@@ -23,8 +22,19 @@ const App = () => {
 
   const fetchTodos = async () => {
     // Fetch todos from your API
-    const response = await axios.get("/todos");
-    setTodos(response.data);
+    const token = localStorage.getItem("jwtAccessToken");
+    if (!token) {
+      console.error("No JWT token found");
+      return;
+    }
+
+    try {
+      const response = await axios.get("/todos");
+      console.log(response.data);
+      setTodos(response.data);
+    } catch (error) {
+      console.error("Failed to fetch todos:", error);
+    }
   };
 
   const addTodo = async () => {
@@ -47,20 +57,6 @@ const App = () => {
     setNewTodoTask("");
     setNewTodoDeadline("");
     setNewTodoCompleted(false);
-  };
-
-  const updateTodo = async (updatedTodo) => {
-    await axios.put(`/api/todos/${updatedTodo.id}`, updatedTodo);
-
-    setTodos((prevTodos) =>
-      prevTodos.map((todo) => (todo.id === updatedTodo.id ? updatedTodo : todo))
-    );
-  };
-
-  const deleteTodo = async (id) => {
-    await axios.delete(`/api/todos/${id}`);
-
-    setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
   };
 
   return (
@@ -115,7 +111,16 @@ const App = () => {
               </Row>
 
               <Routes>
-                <Route path="/" element={<MyTodos userId={profile.id} />} />
+                <Route
+                  path="/"
+                  element={
+                    <MyTodos
+                      userId={profile.id}
+                      todos={todos}
+                      setTodos={setTodos}
+                    />
+                  }
+                />
               </Routes>
             </Container>
           </>

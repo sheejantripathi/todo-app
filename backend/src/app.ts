@@ -1,6 +1,7 @@
 import express from 'express';
 import session from 'express-session';
 import passport from 'passport';
+import helmet from 'helmet';
 import sequelize from './config/database';
 import authRoutes from './routes/auth';
 import todoRoutes from './routes/todo';
@@ -13,6 +14,10 @@ import cors from 'cors';
 dotenv.config();
 
 const app = express();
+
+// Use Helmet to secure HTTP headers
+app.use(helmet());
+
 
 // Middleware
 app.use(express.json());
