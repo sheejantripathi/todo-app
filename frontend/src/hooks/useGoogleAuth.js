@@ -44,8 +44,6 @@ const useGoogleAuth = () => {
 
       const profileData = res.data;
 
-      console.log("Google Profile Data:", profileData);
-
       const loginResponse = await axios.post("/auth/login", {
         google_id: profileData.id,
         name: profileData.name,
