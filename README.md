@@ -56,16 +56,23 @@ frontend/
 
 ```bash
 git clone https://github.com/sheejantripathi/todo-app.git
-cd backend
 ```
 
-### 2. Install dependencies
+### 2. Install dependencies backend
 
 ```bash
+cd backend
 npm install
 ```
 
-### 3. Environment variables
+### 3. Install dependencies frontend
+
+```bash
+cd frontend
+npm install
+```
+
+### 4. Environment variables
 
 Create a `.env` file in the root directory with the following variables:
 
@@ -82,7 +89,7 @@ GOOGLE_CLIENT_SECRET=your_google_client_secret
 NODE_ENV=development
 ```
 
-### 4. Run Migrations
+### 5. Run Migrations
 
 Before starting the server, ensure your database is set up. If you haven't created the database, you can either create it manually or set Sequelize to auto-create tables.
 
@@ -92,7 +99,7 @@ Run the migration script to sync your database:
 npx sequelize-cli db:migrate
 ```
 
-### 5. Run the Application
+### 6. Run the Application
 
 ```bash
 npm run dev
@@ -205,7 +212,8 @@ npm run test
 1. **Pagination**: Implement pagination for fetching large lists of todos.
 2. **Validation**: Add more detailed validation on user inputs using libraries like `Joi` or `express-validator`.
 3. **Error Handling**: Create a more robust error-handling system for better error reporting.
-4. **UI Enhancement**: Making changes in the UI for better user experience and robust functionslities such as:
+4. **Caching and Offline Functionality**: Utilizing service wrokers or library like ReactQuery to cache the API data
+5. **UI Enhancement**: Making changes in the UI for better user experience and robust functionslities such as:
                         - making sure the UI is completely responsive
                         - separate out the active and completed task( currently the completed task goes on the bottom of the list)
                         - allowing the users to Group the todos                       
