@@ -102,8 +102,11 @@ npx sequelize-cli db:migrate
 ### 6. Run the Application
 
 ```bash
+cd frontend
 npm run dev
 ```
+cd backend
+npm run dev
 
 This will start the development server on the specified port.
 
@@ -190,6 +193,8 @@ For testing, we used **Jest** along with **Supertest** to test the API routes. T
 - **jsonWebToken**: generate access token for robust authentication and securing the API 
 - **Helmet**: Secures the app by setting various HTTP headers.
 - **TypeScript**: Ensures static typing and enhanced developer experience.
+- **react**: Basic frontend setup
+- **javascript**: Using JS in the frontend for variety and faster development based on the features required and time constraints
 
 ### Testing Dependencies
 
