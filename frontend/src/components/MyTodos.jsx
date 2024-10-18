@@ -7,6 +7,9 @@ const MyTodos = ({ todos, setTodos }) => {
 
   return (
     <Container>
+      <h3 className="mt-5 mb-5 text-left">
+        <b>My Todos</b>
+      </h3>
       {sortedTodos.map((todo) => (
         <TodoItem key={todo.id} todo={todo} setTodos={setTodos} />
       ))}
