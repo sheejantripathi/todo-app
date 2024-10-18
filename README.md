@@ -33,7 +33,10 @@ frontend/
 ## Key Features
 
 - **Create, Read, Update, Delete (CRUD)** operations on Todos.
-- User-based authorization for todos using **Passport.js**.
+- **Google** based login mechanism
+- User-based authorization for todos using **JWT** and **Passport.js**.
+- highlights the row in red if the task is **overdue(deadline has passed and is incomplete)**.
+- Assign the todos to **groups**
 - **Sequelize ORM** for database interaction, making the app scalable and easily modifiable.
 - **Helmet** for securing the app by setting various HTTP headers.
 - Fully **TypeScript**-based for strong typing and enhanced developer experience.
