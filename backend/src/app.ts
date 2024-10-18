@@ -39,7 +39,7 @@ sequelize.sync().then(() => {
 // Routes
 app.use('/auth', authRoutes);
 app.use('/todos', todoRoutes);
-app.use('/group', groupRoutes);
+app.use('/groups', groupRoutes);
 
 const PORT = process.env.PORT || 3000;
 

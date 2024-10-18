@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Form, Button, Col, Row } from "react-bootstrap";
 import PropTypes from "prop-types";
 import axios from "../axiosConfig";
+import classNames from "classnames"; // Import classnames library (optional for cleaner class handling)
 
 const TodoItem = ({ todo, setTodos }) => {
   const [isEditing, setIsEditing] = useState(todo.id === "new");
@@ -19,7 +20,6 @@ const TodoItem = ({ todo, setTodos }) => {
 
   const updateTodo = async (updatedTodo) => {
     try {
-      console.log(updatedTodo);
       const response = await axios.put(`/todos/${updatedTodo.id}`, {
         ...updatedTodo,
         deadline: updatedTodo.deadline
@@ -37,7 +37,6 @@ const TodoItem = ({ todo, setTodos }) => {
       });
     } catch (error) {
       console.error("Failed to update todo:", error);
-      // Handle error (e.g., show an error message to the user)
     }
   };
 
@@ -47,7 +46,6 @@ const TodoItem = ({ todo, setTodos }) => {
       setTodos((prevTodos) => prevTodos.filter((t) => t.id !== id));
     } catch (error) {
       console.error("Failed to delete todo:", error);
-      // Handle error (e.g., show an error message to the user)
     }
   };
 
@@ -73,8 +71,18 @@ const TodoItem = ({ todo, setTodos }) => {
     return date.toISOString().split("T")[0]; // Returns 'YYYY-MM-DD' or '' if invalid
   }
 
+  // Function to check if the task is overdue
+  const isOverdue = () => {
+    const currentDate = new Date().toISOString().split("T")[0];
+    return !editedTodo.isComplete && editedTodo.deadline < currentDate;
+  };
+
   return (
-    <Row className="mb-2 align-items-center border rounded">
+    <Row
+      className={classNames("mb-2 align-items-center border rounded", {
+        "bg-danger text-white": isOverdue(), // Apply red background if overdue
+      })}
+    >
       <Col xs={4} className="py-2 border-end d-flex align-items-center">
         {isEditing ? (
           <Form.Control
