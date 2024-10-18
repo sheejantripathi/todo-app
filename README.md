@@ -217,7 +217,7 @@ npm run test
 1. **Pagination**: Implement pagination for fetching large lists of todos.
 2. **Validation**: Add more detailed validation on user inputs using libraries like `Joi` or `express-validator`.
 3. **Error Handling**: Create a more robust error-handling system for better error reporting.
-4. **Caching and Offline Functionality**: Utilizing service wrokers or library like ReactQuery to cache the API data
+4. **Caching and Offline Functionality**: Utilizing service workers or library like ReactQuery to cache the API data
 5. **UI Enhancement**: Making changes in the UI for better user experience and robust functionslities such as:
                         - making sure the UI is completely responsive
                         - separate out the active and completed task( currently the completed task goes on the bottom of the list)
@@ -225,5 +225,5 @@ npm run test
 
 ### Authors
 
-- **Sheejan Tripathi** - Developer
+- **Sheejan Tripathi** - Software Engineer
 
