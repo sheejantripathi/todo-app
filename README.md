@@ -109,15 +109,14 @@ The following API endpoints are available:
 ### Todos
 
 - **GET /todos** - Fetch all todos for the authenticated user.
-- **GET /todos/:id** - Fetch a single todo by ID.
 - **POST /todos** - Create a new todo.
 - **PUT /todos/:id** - Update a specific todo.
 - **DELETE /todos/:id** - Delete a specific todo.
 
 ### Authentication
 
-- **POST /auth/login** - Log in with a username and password to receive a JWT token.
-- **POST /auth/register** - Register a new user.
+- **POST /auth/login** - Log in with a google oauth to receive a JWT token.
+- **POST /auth/user** - Register a new user.
 
 ---
 
@@ -133,13 +132,15 @@ The project uses **Express.js** as the web framework. It is lightweight, has gre
 
 ### 3. **Sequelize ORM**
 
-We chose **Sequelize** to interact with the MySQL database due to its simplicity and flexibility. Sequelize supports migrations, hooks, validations, and relationships, all of which are essential for this project. Sequelize also simplifies query writing, allowing for faster development.
+I chose **Sequelize** to interact with the MySQL database due to its simplicity, flexibility and my familiarity with the ORM. Sequelize supports migrations, hooks, validations, and relationships, all of which are essential for this project. Sequelize also simplifies query writing, allowing for faster development.
 
 Key Models:
 - **Todo**: Represents the todos, containing fields such as task, deadline, isComplete, and userId.
 - **User**: Represents the users and integrates with **Passport.js** for authentication.
 
-### 4. **Authentication with Passport.js**
+### 4. **Authentication with google Oauth login and Passport.js**
+
+**Google Oauth** For user authentication, the Google OAuth 2.0 authentication method was chosen. This provides a secure, user-friendly way for users to log in using their existing Google accounts, eliminating the need to manage passwords and reducing friction in the login process.
 
 **Passport.js** was chosen for handling authentication using **JWT** tokens. JWT provides stateless authentication, which is useful for building APIs and simplifies scaling as there’s no need to store session data on the server.
 
@@ -153,14 +154,13 @@ Security is an important aspect of any web application. By using **Helmet**, we 
 
 Middleware was designed in a modular way to enhance the extensibility and maintainability of the codebase. We used:
 - **authMiddleware**: Ensures only authenticated users can access the API routes.
-- **errorHandler**: A simple middleware to handle errors globally (can be extended further).
 
 ### 7. **Testing with Jest**
 
 For testing, we used **Jest** along with **Supertest** to test the API routes. This ensures that both the logic and the routes work as expected.
 
 - **Supertest** allows us to simulate HTTP requests to the API without needing to start the server.
-- Tests are located in the `/tests` folder, and the Jest config is specified in the `jest.config.ts` file.
+- Tests are located in the `/__tests__` folder, and the Jest config is specified in the `jest.config.ts` file.
 
 ---
 
