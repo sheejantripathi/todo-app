@@ -171,9 +171,10 @@ For testing, we used **Jest** along with **Supertest** to test the API routes. T
 - **Express.js**: Web framework for building the API.
 - **Sequelize**: ORM for MySQL.
 - **Passport.js**: Authentication middleware.
+- **passport-google-oauth20**: Passport strategy for authenticating with Google using the OAuth 2.0 API.
+- **jsonWebToken**: generate access token for robust authentication and securing the API 
 - **Helmet**: Secures the app by setting various HTTP headers.
 - **TypeScript**: Ensures static typing and enhanced developer experience.
-- **bcrypt**: For password hashing.
 
 ### Testing Dependencies
 
