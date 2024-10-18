@@ -189,44 +189,17 @@ Tests are set up to ensure the correctness of the API. You can run them using:
 npm run test
 ```
 
-### Example Test
-
-Here's a simple Jest test to check the `/todos` GET route:
-
-```typescript
-import request from 'supertest';
-import app from '../src/app';
-
-describe('GET /todos', () => {
-  it('should return a list of todos for the authenticated user', async () => {
-    const response = await request(app)
-      .get('/todos')
-      .set('Authorization', 'Bearer your_token_here');
-
-    expect(response.statusCode).toBe(200);
-    expect(response.body).toBeInstanceOf(Array);
-  });
-});
-```
-
----
-
 ## Future Improvements
 
 1. **Pagination**: Implement pagination for fetching large lists of todos.
 2. **Validation**: Add more detailed validation on user inputs using libraries like `Joi` or `express-validator`.
 3. **Error Handling**: Create a more robust error-handling system for better error reporting.
-4. **Rate Limiting**: To protect the API from abuse, rate-limiting middleware like `express-rate-limit` can be introduced.
-
----
-
-## Conclusion
-
-This Todo application backend is a robust and scalable solution built with modern web development technologies. It leverages TypeScript for type safety, Sequelize for efficient database interactions, Passport for secure authentication, and Jest for test coverage. The design choices and libraries used help ensure the application is secure, maintainable, and easy to develop.
-
----
+4. **UI Enhancement**: Making changes in the UI for better user experience and robust functionslities such as:
+                        - making sure the UI is completely responsive
+                        - separate out the active and completed task( currently the completed task goes on the bottom of the list)
+                        - allowing the users to Group the todos                       
 
 ### Authors
 
-- **Your Name** - Developer
+- **Sheejan Tripathi** - Developer
 
