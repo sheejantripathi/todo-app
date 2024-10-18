@@ -50,6 +50,7 @@ router.post('/', authMiddleware, async (req: any, res: Response) => {
 // update a todo
 router.put('/:id', authMiddleware, async (req: any, res: Response) => {
     try {
+        console.log('i am here')
         const todo = await Todo.findOne({ where: { id: req.params.id, userId: req.user.id } });
     
         if (!todo) {
@@ -59,7 +60,7 @@ router.put('/:id', authMiddleware, async (req: any, res: Response) => {
     
         todo.task = req.body.task;
         todo.deadline = req.body.deadline;
-        todo.isComplete = req.body.is_complete;
+        todo.isComplete = req.body.isComplete;
         todo.groupId = req.body.group_id;
     
         await todo.save();

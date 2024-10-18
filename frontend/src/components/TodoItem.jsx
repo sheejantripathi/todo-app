@@ -1,27 +1,50 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Form, Button, Col, Row } from "react-bootstrap";
 import PropTypes from "prop-types";
-import { updateOrCreateTodo, deleteTodo } from "../services/api";
+import axios from "../axiosConfig";
 
-const TodoItem = ({ todo, onUpdate, onDelete }) => {
+const TodoItem = ({ todo, setTodos }) => {
   const [isEditing, setIsEditing] = useState(todo.id === "new");
-  const [editedTodo, setEditedTodo] = useState({ ...todo });
+  const [editedTodo, setEditedTodo] = useState({
+    ...todo,
+    deadline: formatDate(todo.deadline) || "", // Ensure deadline is always a string
+  });
 
-  const handleSave = async () => {
+  useEffect(() => {
+    setEditedTodo({
+      ...todo,
+      deadline: formatDate(todo.deadline) || "", // Update editedTodo when todo prop changes
+    });
+  }, [todo]);
+
+  const updateTodo = async (updatedTodo) => {
     try {
-      const updatedTodo = await updateOrCreateTodo(editedTodo.id, editedTodo);
-      onUpdate(updatedTodo);
+      console.log(updatedTodo);
+      const response = await axios.put(`/todos/${updatedTodo.id}`, {
+        ...updatedTodo,
+        deadline: updatedTodo.deadline
+          ? new Date(updatedTodo.deadline).toISOString()
+          : null,
+      });
+      const savedTodo = response.data;
+      setTodos((prevTodos) =>
+        prevTodos.map((t) => (t.id === savedTodo.id ? savedTodo : t))
+      );
       setIsEditing(false);
+      setEditedTodo({
+        ...savedTodo,
+        deadline: formatDate(savedTodo.deadline) || "",
+      });
     } catch (error) {
       console.error("Failed to update todo:", error);
       // Handle error (e.g., show an error message to the user)
     }
   };
 
-  const handleDelete = async () => {
+  const deleteTodo = async (id) => {
     try {
-      await deleteTodo(todo.id);
-      onDelete(todo.id);
+      await axios.delete(`/todos/${id}`);
+      setTodos((prevTodos) => prevTodos.filter((t) => t.id !== id));
     } catch (error) {
       console.error("Failed to delete todo:", error);
       // Handle error (e.g., show an error message to the user)
@@ -32,14 +55,23 @@ const TodoItem = ({ todo, onUpdate, onDelete }) => {
     const { name, value, type, checked } = e.target;
     setEditedTodo((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : value,
+      [name]: type === "checkbox" ? checked : value || "", // Ensure value is never undefined
     }));
   };
 
-  const formatDate = (isoString) => {
-    const date = new Date(isoString);
-    return date.toISOString().split("T")[0]; // Extracts 'YYYY-MM-DD'
+  const handleCompleteChange = (e) => {
+    const { checked } = e.target;
+    setEditedTodo((prev) => ({
+      ...prev,
+      isComplete: checked,
+    }));
   };
+
+  function formatDate(isoString) {
+    if (!isoString) return "";
+    const date = new Date(isoString);
+    return date.toISOString().split("T")[0]; // Returns 'YYYY-MM-DD' or '' if invalid
+  }
 
   return (
     <Row className="mb-2 align-items-center border rounded">
@@ -48,12 +80,12 @@ const TodoItem = ({ todo, onUpdate, onDelete }) => {
           <Form.Control
             type="text"
             name="task"
-            value={editedTodo.task}
+            value={editedTodo.task || ""}
             onChange={handleChange}
             placeholder="Enter todo title"
           />
         ) : (
-          <span>{todo.task}</span>
+          <span>{editedTodo.task}</span>
         )}
       </Col>
       <Col xs={3} className="py-2 border-end d-flex align-items-center">
@@ -61,25 +93,21 @@ const TodoItem = ({ todo, onUpdate, onDelete }) => {
           <Form.Control
             type="date"
             name="deadline"
-            value={formatDate(editedTodo.deadline)}
+            value={editedTodo.deadline || ""}
             onChange={handleChange}
           />
         ) : (
-          <span>{todo.deadline}</span>
+          <span>{editedTodo.deadline}</span>
         )}
       </Col>
       <Col xs={2} className="py-2 border-end d-flex align-items-center">
         <Form.Check
           type="switch"
-          id={`complete-switch-${todo.id}`}
+          id={`complete-switch-${editedTodo.id}`}
           label="Completed"
-          checked={isEditing ? editedTodo.isComplete : todo.isComplete}
-          onChange={(e) =>
-            isEditing
-              ? handleChange(e)
-              : onUpdate({ ...todo, isCompleted: e.target.checked })
-          }
-          name="isCompleted"
+          checked={editedTodo.isComplete || false}
+          onChange={isEditing ? handleCompleteChange : handleChange}
+          name="isComplete"
         />
       </Col>
       <Col
@@ -87,7 +115,11 @@ const TodoItem = ({ todo, onUpdate, onDelete }) => {
         className="py-2 d-flex justify-content-end align-items-center"
       >
         {isEditing ? (
-          <Button variant="success" onClick={handleSave} className="me-2">
+          <Button
+            variant="success"
+            onClick={() => updateTodo(editedTodo)}
+            className="me-2"
+          >
             Save
           </Button>
         ) : (
@@ -99,7 +131,11 @@ const TodoItem = ({ todo, onUpdate, onDelete }) => {
             Edit
           </Button>
         )}
-        <Button variant="danger" onClick={handleDelete} disabled={isEditing}>
+        <Button
+          variant="danger"
+          onClick={() => deleteTodo(editedTodo.id)}
+          disabled={isEditing}
+        >
           Delete
         </Button>
       </Col>
@@ -112,10 +148,9 @@ TodoItem.propTypes = {
     id: PropTypes.number.isRequired,
     task: PropTypes.string.isRequired,
     deadline: PropTypes.string.isRequired,
-    isComplete: PropTypes.bool.isRequired,
+    isComplete: PropTypes.bool,
   }).isRequired,
-  onUpdate: PropTypes.func.isRequired,
-  onDelete: PropTypes.func.isRequired,
+  setTodos: PropTypes.func.isRequired,
 };
 
 export default TodoItem;
