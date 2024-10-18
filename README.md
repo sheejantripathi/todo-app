@@ -44,7 +44,7 @@ frontend/
 
 ---
 
-## Installation and Setup
+## Installation and Setup backend
 
 ### Prerequisites
 
@@ -75,7 +75,10 @@ DB_USER=root
 DB_PASSWORD=password
 DB_NAME=todo_app
 JWT_SECRET=your_jwt_secret
-PORT=3000
+PORT=5000
+JWT_EXPIRATION=1d
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
 NODE_ENV=development
 ```
 
