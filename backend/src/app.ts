@@ -1,3 +1,4 @@
+// app.ts
 import express from 'express';
 import session from 'express-session';
 import passport from 'passport';
@@ -17,7 +18,6 @@ const app = express();
 
 // Use Helmet to secure HTTP headers
 app.use(helmet());
-
 
 // Middleware
 app.use(express.json());
@@ -42,4 +42,11 @@ app.use('/todos', todoRoutes);
 app.use('/group', groupRoutes);
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+// Start the server only if the file is not being required for testing
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+}
+
+// Export the app for testing
+export default app;

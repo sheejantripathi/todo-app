@@ -29,11 +29,11 @@ const authMiddleware = async (req: Request, res: Response, next: NextFunction): 
     const decoded = jwt.verify(token, JWT_SECRET) as JwtPayload;
 
     // Fetch user details using the user ID (id from JWT)
-    const user = await User.findByPk(decoded.id); // Fetch the user from the database
+    const user = await User.findByPk(decoded.id); 
 
     if (!user) {
       res.status(404).json({ message: 'User not found' });
-      return; // Explicitly return after sending the response
+      return; 
     }
 
     // Attach user data to the request object
@@ -44,7 +44,7 @@ const authMiddleware = async (req: Request, res: Response, next: NextFunction): 
   } catch (error) {
     // Handle invalid token error
     res.status(401).json({ message: 'Invalid token' });
-    return; // Explicitly return after sending the response
+    return; 
   }
 };
 
